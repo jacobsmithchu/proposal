@@ -59,9 +59,22 @@
         </div>
     </div>
     
-    <audio id="bgMusic" autoplay loop>
+    <audio id="bgMusic" loop>
         <source src="bgm1.mp3" type="audio/mp3">
         Your browser does not support the audio element.
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var audio = document.getElementById('bgMusic');
+            var playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // Auto-play was prevented, show a play button or handle the error
+                    console.log('Autoplay prevented:', error);
+                });
+            }
+        });
+    </script>
     </audio>
     
     <button id="musicToggle" class="music-toggle" onclick="toggleMusic()">🔊</button>
