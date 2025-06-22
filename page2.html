@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Walk with Pride ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-2 {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                    url('image2.png') no-repeat center center/cover;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+        }
+        .prev-btn, .next-btn {
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body class="page-2">
+    <div class="container">
+        <div class="content">
+            <h1>My walk with pride</h1>
+            <div class="text-content">
+                <p>I have two lives, the second one began after I met you.</p>
+                
+                <p>How do I tell what lies in me for you. Everything. Without end, and the start.
+                Words won't carry my ink of heart.
+                Kaise bayaan krun,💌 Tum mujhme mujhse jyadaa ho.
+                Love and silence are the two deepest language of our soul.
+                In the quiet I loved you.</p>
+            </div>
+            <div class="navigation">
+                <a href="index.html" class="next-btn">👈 Previous</a>
+                <a href="page3.html" class="next-btn">Next Page ❤️</a>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" autoplay loop>
+        <source src="bgm2.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <button id="musicToggle" class="music-toggle" onclick="toggleMusic()">🔊</button>
+    
+    <script>
+        // Get audio element and toggle button
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        
+        // Set initial volume
+        music.volume = 0.3;
+        
+        // Try to play music immediately
+        function playMusic() {
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay prevented, will try again after interaction");
+                    // Try again when user interacts with the page
+                    const enableMusic = () => {
+                        music.play().catch(e => console.log("Still can't play:", e));
+                        document.removeEventListener('click', enableMusic);
+                        document.removeEventListener('keydown', enableMusic);
+                    };
+                    document.addEventListener('click', enableMusic, { once: true });
+                    document.addEventListener('keydown', enableMusic, { once: true });
+                });
+            }
+        }
+        
+        // Start playing music when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Try to play immediately
+            playMusic();
+            
+            // Also try again after a short delay
+            setTimeout(playMusic, 1000);
+        });
+        
+        // Toggle music on/off
+        function toggleMusic() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicToggle.textContent = '🔊';
+                });
+            } else {
+                music.pause();
+                musicToggle.textContent = '🔇';
+            }
+        }
+
+        // Add floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        
+        // Create hearts periodically
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>

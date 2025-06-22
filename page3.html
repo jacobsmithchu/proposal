@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love Letter ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-3 {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                    url('image3.png') no-repeat center center/cover;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+        }
+        .prev-btn, .next-btn {
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+        }
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            color: #ffb6c1;
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="page-3">
+    <div class="container">
+        <div class="content">
+            <h1>I have a question</h1>
+            <div class="text-content">
+                <p>I don't know how to begin.<br>
+                I have tried a hundred times.<br>
+                I've written your name on paper until it bled into my skin,<br>
+                and yet nothing I say matches the ache that you are in me.</p>
+                
+                <p>There is a Turkish saying — if you love a person, you love them twice.<br>
+                Once when you say "I love you." And forever seems the end of beginning!<br>
+                Before I spoke your name,<br>
+                My heart was already singing it.<br>
+                Before I touched your hand,<br>
+                My soul had already held you in silence.</p>
+                
+                <p>O Maysa, Beloved —<br>
+                You are not just the love of my life.<br>
+                You are life within my love.<br>
+                In every lifetime, I would find you.<br>
+                In every world, I would choose you.</p>
+                
+                <div class="signature">
+                    <p>With all my love,</p>
+                    <p>Always and forever</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="page2.html" class="next-btn">👈 Previous</a>
+                <a href="index.html" class="next-btn">❤️ Back to Start</a>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" autoplay loop>
+        <source src="bgm3.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <button id="musicToggle" class="music-toggle" onclick="toggleMusic()">🔊</button>
+    
+    <script>
+        // Get audio element and toggle button
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        
+        // Set initial volume
+        music.volume = 0.3;
+        
+        // Try to play music immediately
+        function playMusic() {
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay prevented, will try again after interaction");
+                    // Try again when user interacts with the page
+                    const enableMusic = () => {
+                        music.play().catch(e => console.log("Still can't play:", e));
+                        document.removeEventListener('click', enableMusic);
+                        document.removeEventListener('keydown', enableMusic);
+                    };
+                    document.addEventListener('click', enableMusic, { once: true });
+                    document.addEventListener('keydown', enableMusic, { once: true });
+                });
+            }
+        }
+        
+        // Start playing music when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Try to play immediately
+            playMusic();
+            
+            // Also try again after a short delay
+            setTimeout(playMusic, 1000);
+        });
+        
+        // Toggle music on/off
+        function toggleMusic() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicToggle.textContent = '🔊';
+                });
+            } else {
+                music.pause();
+                musicToggle.textContent = '🔇';
+            }
+        }
+
+        // Add floating hearts with different colors
+        const heartColors = ['❤️', '💖', '💗', '💓', '💞', '💕', '💘'];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const randomHeart = heartColors[Math.floor(Math.random() * heartColors.length)];
+            heart.innerHTML = randomHeart;
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        
+        // Create hearts periodically
+        setInterval(createHeart, 200);
+    </script>
+</body>
+</html>

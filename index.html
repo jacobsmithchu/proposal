@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-1">
+    <div class="container">
+        <div class="content">
+            <h1>My Eidoloné</h1>
+            <div class="text-content">
+                <p>Hello to Petals of the past,<br>
+                I saw a few strangers write their names in own confinement. Spray laughs on that one echelon where I met my light of linger, Hey jude, I knew I found the one now. she would write my name in long letters with spray paints on that one wall behind heart, Hey jude, None of it has faded now.</p>
+                
+                <p>You, my predestined-alibi. How amongst the odd of life, I met you at this very place, at this very time.</p>
+                
+                <p>The day I first met thee, Maysa. I knew not I was meeting you — but rather remembering you, as if my soul had waited lifetimes for thine.</p>
+                
+                <p>You clicked my soul no one could even see bare of. I refuse to believe the role of fate when two souls ache, trench and craft a Meet. You did, I did.</p>
+            </div>
+            <div class="navigation">
+                <a href="page2.html" class="next-btn">Next Page ❤️</a>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" autoplay loop>
+        <source src="bgm1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <button id="musicToggle" class="music-toggle" onclick="toggleMusic()">🔊</button>
+    
+    <script>
+        // Get audio element and toggle button
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        
+        // Set initial volume
+        music.volume = 0.3;
+        
+        // Try to play music immediately
+        function playMusic() {
+            const playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay prevented, will try again after interaction");
+                    // Try again when user interacts with the page
+                    const enableMusic = () => {
+                        music.play().catch(e => console.log("Still can't play:", e));
+                        document.removeEventListener('click', enableMusic);
+                        document.removeEventListener('keydown', enableMusic);
+                    };
+                    document.addEventListener('click', enableMusic, { once: true });
+                    document.addEventListener('keydown', enableMusic, { once: true });
+                });
+            }
+        }
+        
+        // Start playing music when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Try to play immediately
+            playMusic();
+            
+            // Also try again after a short delay
+            setTimeout(playMusic, 1000);
+        });
+        
+        // Toggle music on/off
+        function toggleMusic() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicToggle.textContent = '🔊';
+                });
+            } else {
+                music.pause();
+                musicToggle.textContent = '🔇';
+            }
+        }
+    </script>
+</body>
+</html>
